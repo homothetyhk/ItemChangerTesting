@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-
-namespace ItemChangerTesting.Tests
+﻿namespace ItemChangerTesting.Tests
 {
     class GrubTest : SimpleTest
     {
@@ -13,7 +6,7 @@ namespace ItemChangerTesting.Tests
 
         public override IEnumerable<AbstractPlacement> GetPlacements(TestArgs args)
         {
-            yield return Finder.GetLocation(LocationNames.Grub_Crystal_Peak_Below_Chest).Wrap().AddItem(Finder.GetItem(ItemNames.Grub));
+            yield return Finder.GetLocation(LocationNames.Grub_Crystal_Peak_Below_Chest).Wrap().Add(Finder.GetItem(ItemNames.Grub));
         }
 
     }

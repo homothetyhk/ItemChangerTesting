@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using ItemChanger.Locations;
+﻿using ItemChanger.Locations;
 using ItemChanger.Placements;
+using ItemChanger.StartDefs;
 
 namespace ItemChangerTesting.Tests
 {
@@ -15,21 +10,21 @@ namespace ItemChangerTesting.Tests
 
         public override IEnumerable<AbstractPlacement> GetPlacements(TestArgs args)
         {
-            var p = new CostChestPlacement
+            var p = new CostChestPlacement("Grubfather")
             {
                 chestLocation = Chest,
                 tabletLocation = Tablet,
             };
             Random rng = new Random();
-            p.AddItems(args.Items.Apply(i => i.AddTag<CostTag>().Cost = Cost.NewGrubCost(rng.Next(0, 5))));
+            p.Add(args.Items.Apply(i => i.AddTag<CostTag>().Cost = Cost.NewGrubCost(rng.Next(0, 5))));
             yield return p;
 
-            var p2 = new MutablePlacement
+            var p2 = new MutablePlacement("Grubs")
             {
-                location = Finder.GetLocation(LocationNames.Hallownest_Seal_Grubs) as CoordinateLocation,
+                Location = Finder.GetLocation(LocationNames.Hallownest_Seal_Grubs) as CoordinateLocation,
                 containerType = Container.Chest,
             };
-            p2.AddItems(Repeat(Finder.GetItem(ItemNames.Grub), 4));
+            p2.Add(Repeat(Finder.GetItem(ItemNames.Grub), 4));
             yield return p2;
         }
 

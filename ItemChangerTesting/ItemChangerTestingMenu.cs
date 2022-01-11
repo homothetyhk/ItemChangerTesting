@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using MenuChanger;
+﻿using MenuChanger;
+using MenuChanger.Extensions;
 using MenuChanger.MenuElements;
 using MenuChanger.MenuPanels;
 using UnityEngine;
@@ -15,9 +10,10 @@ namespace ItemChangerTesting
     {
         ItemChangerTestingMenu menu;
 
-        public override BigButton GetModeButton(MenuPage modeMenu)
+        public override bool TryGetModeButton(MenuPage modeMenu, out BigButton button)
         {
-            return menu.EntryButton;
+            button = menu.EntryButton;
+            return true;
         }
 
         public override void OnEnterMainMenu(MenuPage modeMenu)
@@ -56,21 +52,26 @@ namespace ItemChangerTesting
             ArgsPage = new MenuPage("ItemChangerTesting Args Page", TestSelectPage);
 
             EntryButton = new BigButton(modePage, "ItemChanger Testing");
-            EntryButton.Button.AddHideAndShowEvent(modePage, TestSelectPage);
+            EntryButton.AddHideAndShowEvent(modePage, TestSelectPage);
 
-            testViewer = new MultiGridItemPanel(TestSelectPage, 8, 3, 60f, 600f, new UnityEngine.Vector2(0f, 400f), Tests.Select((t, i) => GetButton(t, i)).ToArray());
+            testViewer = new MultiGridItemPanel(TestSelectPage, 12, 3, 60f, 600f, new Vector2(0f, 400f), Tests.Select((t, i) => GetButton(t, i)).ToArray());
 
             new MenuLabel(TestSelectPage, "Tests").MoveTo(new Vector2(0f, 480f));
             new MenuLabel(ArgsPage, "Item Flags").MoveTo(new Vector2(-400f, 480f));
             new MenuLabel(ArgsPage, "Start Flags").MoveTo(new Vector2(400f, 480f));
 
-            startFlagMEF = new MenuElementFactory<StartFlags>(ArgsPage, args.StartFlags);
             itemFlagMEF = new MenuElementFactory<ItemFlags>(ArgsPage, args.ItemFlags);
-            startFlagGIP = new GridItemPanel(ArgsPage, new Vector2(400f, 400f), 1, 100f, 300f, startFlagMEF.Elements);
-            itemFlagGIP = new GridItemPanel(ArgsPage, new Vector2(-400f, 400f), 2, 100f, 300f, itemFlagMEF.Elements);
+            itemFlagGIP = new GridItemPanel(ArgsPage, new Vector2(-400f, 400f), 2, 100f, 300f, true, itemFlagMEF.Elements);
+
+            startFlagMEF = new MenuElementFactory<StartFlags>(ArgsPage, args.StartFlags);
+            startFlagGIP = new GridItemPanel(ArgsPage, new Vector2(400f, 400f), 1, 100f, 300f, true, startFlagMEF.Elements);
+            
             startButton = new BigButton(ArgsPage, "Start Test");
             startButton.MoveTo(new Vector2(0f, -100f));
             startButton.OnClick += () => selectedTest.Start(args);
+            startFlagGIP.SetNeighbor(Neighbor.Down, startButton);
+            startButton.SymSetNeighbor(Neighbor.Up, itemFlagGIP);
+            startButton.SymSetNeighbor(Neighbor.Down, ArgsPage.backButton);
         }
 
         public SmallButton GetButton(Test t, int index)

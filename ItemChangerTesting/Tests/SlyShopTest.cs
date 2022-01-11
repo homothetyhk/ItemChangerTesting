@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using ItemChanger.Placements;
+﻿using ItemChanger.Placements;
+using ItemChanger.StartDefs;
 
 namespace ItemChangerTesting.Tests
 {
@@ -31,8 +26,8 @@ namespace ItemChangerTesting.Tests
             sly1.AddItemWithCost(wk, null);
             sly1.AddItemWithCost(grub, 100);
             sly2.AddItemWithCost(shopkey, Cost.NewGrubCost(1));
-            sly_key1.AddItem(dive);
-            sly_key2.AddItem(cyclone);
+            sly_key1.Add(dive);
+            sly_key2.Add(cyclone);
 
             yield return sly1;
             yield return sly_key1;
@@ -44,7 +39,7 @@ namespace ItemChangerTesting.Tests
         {
             base.Start(args);
             PlayerData.instance.SetBool(nameof(PlayerData.slyRescued), true);
-            ItemChanger.Internal.Ref.WORLD.slyRescued = true;
+            //ItemChanger.Internal.Ref.WORLD.slyRescued = true;
         }
     }
 }

@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
+﻿using ItemChanger.StartDefs;
 
 namespace ItemChangerTesting
 {
     public abstract class SimpleTest : Test
     {
-        public readonly AbstractLocation location;
+        public readonly string location;
         public readonly string entryGateName;
 
         public SimpleTest(string location, string entryGateName)
         {
-            this.location = Finder.GetLocation(location);
+            this.location = location;
             this.entryGateName = entryGateName;
         }
 
-        public override StartDef StartDef => TransitionBasedStartDef.FromGate(location.sceneName, entryGateName);
+        public override StartDef StartDef => TransitionBasedStartDef.FromGate(Finder.GetLocation(location).sceneName, entryGateName);
 
         public override IEnumerable<AbstractPlacement> GetPlacements(TestArgs args)
         {
-            yield return location.Wrap().AddItems(args.Items);
+            yield return Finder.GetLocation(location).Wrap().Add(args.Items);
         }
     }
 }

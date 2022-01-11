@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using ItemChanger.Items;
+﻿using ItemChanger.Items;
 
 namespace ItemChangerTesting.Tests
 {
@@ -15,8 +9,10 @@ namespace ItemChangerTesting.Tests
         public override IEnumerable<AbstractPlacement> GetPlacements(TestArgs args)
         {
             foreach (var p in base.GetPlacements(args)) yield return p;
+            AbstractItem gc = Finder.GetItem(ItemNames.Grimmchild1);
+            gc.AddTag<ItemChanger.Tags.EquipCharmOnGiveTag>();
             yield return Finder.GetLocation(LocationNames.Start).Wrap()
-                .AddItem(new EquippedCharmItem { charmNum = 40 });
+                .Add(gc);
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
+﻿using ItemChanger.StartDefs;
 
 namespace ItemChangerTesting.Tests
 {
@@ -13,8 +8,8 @@ namespace ItemChangerTesting.Tests
 
         public override IEnumerable<AbstractPlacement> GetPlacements(TestArgs args)
         {
-            yield return Finder.GetLocation(LocationNames.Charm_Notch_Colosseum).Wrap().AddItems(args.Items);
-            yield return Finder.GetLocation(LocationNames.Pale_Ore_Colosseum).Wrap().AddItems(args.Items);
+            yield return Finder.GetLocation(LocationNames.Charm_Notch_Colosseum).Wrap().Add(args.Items);
+            yield return Finder.GetLocation(LocationNames.Pale_Ore_Colosseum).Wrap().Add(args.Items);
         }
     }
 }

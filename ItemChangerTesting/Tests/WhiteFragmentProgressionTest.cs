@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using ItemChanger.Placements;
+﻿using ItemChanger.Placements;
+using ItemChanger.StartDefs;
 
 namespace ItemChangerTesting.Tests
 {
@@ -16,10 +11,10 @@ namespace ItemChangerTesting.Tests
         {
             ShopPlacement sp = Finder.GetLocation(LocationNames.Salubra).Wrap() as ShopPlacement;
             sp.defaultShopItems = DefaultShopItems.None;
-            sp.AddItem(Finder.GetItem(ItemNames.Queen_Fragment));
-            sp.AddItem(Finder.GetItem(ItemNames.King_Fragment));
-            sp.AddItem(Finder.GetItem(ItemNames.Kingsoul));
-            sp.AddItem(Finder.GetItem(ItemNames.Void_Heart));
+            sp.Add(Finder.GetItem(ItemNames.Queen_Fragment));
+            sp.Add(Finder.GetItem(ItemNames.King_Fragment));
+            sp.Add(Finder.GetItem(ItemNames.Kingsoul));
+            sp.Add(Finder.GetItem(ItemNames.Void_Heart));
 
             yield return sp;
         }

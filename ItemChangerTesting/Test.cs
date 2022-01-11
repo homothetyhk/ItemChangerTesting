@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using MenuChanger;
+﻿using MenuChanger;
 
 namespace ItemChangerTesting
 {
@@ -12,10 +6,10 @@ namespace ItemChangerTesting
     {
         public virtual StartDef StartDef => new StartDef
         {
-            startSceneName = SceneNames.Tutorial_01,
-            mapZone = 2,
-            startX = 35.5f,
-            startY = 11.4f,
+            SceneName = SceneNames.Tutorial_01,
+            MapZone = 2,
+            X = 35.5f,
+            Y = 11.4f,
         };
 
         public virtual string GetName() => GetType().Name.FromCamelCase();
@@ -24,6 +18,7 @@ namespace ItemChangerTesting
 
         public virtual void Start(TestArgs args)
         {
+            ItemChangerMod.CreateSettingsProfile(overwrite: false);
             ItemChangerMod.ChangeStartGame(StartDef);
             ItemChangerMod.AddPlacements(GetPlacements(args));
             args.OnStart();

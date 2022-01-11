@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ItemChanger;
-using ItemChanger.Items;
+﻿using ItemChanger.Items;
+using ItemChanger.Locations;
 
 namespace ItemChangerTesting
 {
@@ -22,9 +17,10 @@ namespace ItemChangerTesting
         static string[] georocks;
         public void OnStart()
         {
-            AbstractPlacement start = Finder.GetLocation("Start").Wrap();
-            start.Location.name = "Silent_Start";
-            ((ItemChanger.Locations.StartLocation)start.Location).MessageType = MessageType.None;
+            StartLocation _start = Finder.GetLocation("Start") as StartLocation;
+            //_start.name = "Silent_Start";
+            //_start.MessageType = MessageType.None;
+            AbstractPlacement start = _start.Wrap();
 
             if (StartFlags.IncreasedNailDamage)
             {
@@ -32,30 +28,30 @@ namespace ItemChangerTesting
             }
             if (StartFlags.Movement)
             {
-                start.AddItem(Finder.GetItem(ItemNames.Mothwing_Cloak));
-                start.AddItem(Finder.GetItem(ItemNames.Mantis_Claw));
-                start.AddItem(Finder.GetItem(ItemNames.Crystal_Heart));
-                start.AddItem(Finder.GetItem(ItemNames.Monarch_Wings));
-                start.AddItem(Finder.GetItem(ItemNames.Shade_Cloak));
-                start.AddItem(Finder.GetItem(ItemNames.Ismas_Tear));
+                start.Add(Finder.GetItem(ItemNames.Mothwing_Cloak));
+                start.Add(Finder.GetItem(ItemNames.Mantis_Claw));
+                start.Add(Finder.GetItem(ItemNames.Crystal_Heart));
+                start.Add(Finder.GetItem(ItemNames.Monarch_Wings));
+                start.Add(Finder.GetItem(ItemNames.Shade_Cloak));
+                start.Add(Finder.GetItem(ItemNames.Ismas_Tear));
             }
             if (StartFlags.DreamNail)
             {
-                start.AddItem(Finder.GetItem(ItemNames.Dream_Nail));
+                start.Add(Finder.GetItem(ItemNames.Dream_Nail));
             }
             if (StartFlags.Spells)
             {
-                start.AddItem(Finder.GetItem(ItemNames.Vengeful_Spirit));
-                start.AddItem(Finder.GetItem(ItemNames.Shade_Soul));
-                start.AddItem(Finder.GetItem(ItemNames.Desolate_Dive));
-                start.AddItem(Finder.GetItem(ItemNames.Descending_Dark));
-                start.AddItem(Finder.GetItem(ItemNames.Howling_Wraiths));
-                start.AddItem(Finder.GetItem(ItemNames.Abyss_Shriek));
-                start.AddItem(Finder.GetItem(ItemNames.Soul_Totem));
+                start.Add(Finder.GetItem(ItemNames.Vengeful_Spirit));
+                start.Add(Finder.GetItem(ItemNames.Shade_Soul));
+                start.Add(Finder.GetItem(ItemNames.Desolate_Dive));
+                start.Add(Finder.GetItem(ItemNames.Descending_Dark));
+                start.Add(Finder.GetItem(ItemNames.Howling_Wraiths));
+                start.Add(Finder.GetItem(ItemNames.Abyss_Shriek));
+                start.Add(Finder.GetItem(ItemNames.Soul_Totem_B));
             }
             if (StartFlags.StartGeo)
             {
-                start.AddItem(new AddGeoItem { amount = 10000, name = "10000 geo" });
+                start.Add(new AddGeoItem { amount = 10000, name = "10000 geo" });
             }
 
             ItemChangerMod.AddPlacements(new[] { start });
@@ -67,6 +63,10 @@ namespace ItemChangerTesting
                 if (ItemFlags.Charm)
                 {
                     yield return Finder.GetItem(ItemNames.Grubsong);
+                }
+                if (ItemFlags.Soul)
+                {
+                    yield return Finder.GetItem(ItemNames.Soul_Totem_B);
                 }
                 if (ItemFlags.BigItem)
                 {
@@ -88,9 +88,17 @@ namespace ItemChangerTesting
                 {
                     yield return Finder.GetItem(ItemNames.Lore_Tablet_Fungal_Wastes_Hidden);
                 }
+                if (ItemFlags.Lifeblood)
+                {
+                    yield return Finder.GetItem(ItemNames.Lifeblood_Cocoon_Large);
+                }
                 if (ItemFlags.Lore)
                 {
                     yield return Finder.GetItem(ItemNames.Lore_Tablet_City_Entrance);
+                }
+                if (ItemFlags.Mimic)
+                {
+                    yield return Finder.GetItem(ItemNames.Mimic_Grub);
                 }
             }
         }
@@ -103,6 +111,9 @@ namespace ItemChangerTesting
         public bool Grub = true;
         public bool GeoRock = true;
         public bool Lore = true;
+        public bool Soul = true;
+        public bool Lifeblood = true;
+        public bool Mimic = false;
     }
 
     public class StartFlags
