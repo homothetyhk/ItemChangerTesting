@@ -14,7 +14,7 @@ namespace ItemChangerTesting
 
         public override string GetVersion()
         {
-            return $"{ItemChangerTestingMenu.Tests.Length} Tests. SHA1: {GetSHA1().Substring(0, 4)}";
+            return $"SHA1: {GetSHA1().Substring(0, 4)}";
         }
 
         public static string GetSHA1()

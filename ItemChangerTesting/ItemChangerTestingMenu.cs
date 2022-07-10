@@ -29,6 +29,8 @@ namespace ItemChangerTesting
 
     public class ItemChangerTestingMenu
     {
+        public static event Func<IEnumerable<Test>> TestInjectors;
+
         public BigButton EntryButton;
         public MenuPage TestSelectPage;
         public MenuPage ArgsPage;
@@ -44,10 +46,12 @@ namespace ItemChangerTesting
         BigButton startButton;
 
 
-        public static readonly Test[] Tests;
+        readonly Test[] Tests;
 
         public ItemChangerTestingMenu(MenuPage modePage)
         {
+            Tests = GetTests();
+
             TestSelectPage = new MenuPage("ItemChangerTesting Test Select Page", modePage);
             ArgsPage = new MenuPage("ItemChangerTesting Args Page", TestSelectPage);
 
@@ -89,9 +93,9 @@ namespace ItemChangerTesting
         }
 
 
-        static ItemChangerTestingMenu()
+        static Test[] GetTests()
         {
-            List<Test> tests = new List<Test>();
+            List<Test> tests = new();
             IEnumerable<Type> types = typeof(Test).Assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(Test)));
             foreach (var type in types)
             {
@@ -104,23 +108,22 @@ namespace ItemChangerTesting
                     Modding.Logger.LogError($"Failed to instantiate ItemChangerTesting.Test of type {type.Name}:\n{e}");
                 }
             }
-
-            Tests = tests.OrderBy(t => t.Priority).ThenBy(t => t.GetName()).ToArray();
-        }
-
-        public class RandomTest : Test
-        {
-            public override StartDef StartDef => throw new NotImplementedException();
-            public override int Priority => int.MinValue;
-            public override IEnumerable<AbstractPlacement> GetPlacements(TestArgs args)
+            if (TestInjectors != null)
             {
-                throw new NotImplementedException();
+                foreach (Delegate d in TestInjectors.GetInvocationList())
+                {
+                    try
+                    {
+                        tests.AddRange(((Func<IEnumerable<Test>>)d)());
+                    }
+                    catch (Exception e) 
+                    {
+                        Modding.Logger.LogError($"Failed to load external tests for ItemChangerTesting:\n{e}");
+                    }
+                }
             }
 
-            public override void Start(TestArgs args)
-            {
-                Tests[new System.Random().Next(1, Tests.Length)].Start(args);
-            }
+            return tests.OrderBy(t => t.Priority).ThenBy(t => t.GetName()).ToArray();
         }
     }
 }
