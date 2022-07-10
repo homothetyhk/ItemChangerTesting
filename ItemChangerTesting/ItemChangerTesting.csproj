@@ -18,7 +18,7 @@
     <Using Include="ItemChanger.StartDefs" />
   </ItemGroup>
   <PropertyGroup>
-    <HollowKnightRefs>D:\Program Files/Steam/steamapps/common/Hollow Knight\hollow_knight_Data/Managed</HollowKnightRefs>
+    <HollowKnightRefs>C:\Program Files/Steam/steamapps/common/Hollow Knight\hollow_knight_Data/Managed</HollowKnightRefs>
   </PropertyGroup>
   <Import Project="LocalOverrides.targets" Condition="Exists('LocalOverrides.targets')" />
   <ItemGroup>
