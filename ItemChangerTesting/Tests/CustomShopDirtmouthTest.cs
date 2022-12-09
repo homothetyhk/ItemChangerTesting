@@ -1,18 +1,13 @@
 ﻿using GlobalEnums;
 using ItemChanger.Locations;
 using ItemChanger.Placements;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ItemChangerTesting.Tests
 {
     /// <summary>
     /// Tests that custom shop locations can properly control the facing-direction of the NPC and that
     /// the shop opens on the correct side of the screen. Also tests that multiple shops can exist in
-    /// the same scene on different NPCs.
+    /// the same scene on different NPCs, and that shops handle a missing out-of-stock dialog appropriately.
     /// </summary>
     class CustomShopDirtmouthTest : Test
     {
