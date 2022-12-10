@@ -29,6 +29,7 @@ namespace ItemChangerTesting.Tests
                 facingDirection = FacingDirection.Auto
             }.Wrap() as ShopPlacement;
             elderbugNeutral.Add(Finder.GetItem(ItemNames.Godtuner));
+            elderbugNeutral.Add(Finder.GetItem(ItemNames.Soul_Refill));
 
             ShopPlacement gravediggerFacingLeft = new CustomShopLocation()
             {
@@ -40,6 +41,7 @@ namespace ItemChangerTesting.Tests
 
             }.Wrap() as ShopPlacement;
             gravediggerFacingLeft.Add(Finder.GetItem(ItemNames.Collectors_Map));
+            gravediggerFacingLeft.Add(Finder.GetItem(ItemNames.Soul_Refill));
 
             ShopPlacement tisoFacingRight = new CustomShopLocation()
             {
@@ -50,6 +52,7 @@ namespace ItemChangerTesting.Tests
                 facingDirection = FacingDirection.Right
             }.Wrap() as ShopPlacement;
             tisoFacingRight.Add(Finder.GetItem(ItemNames.World_Sense));
+            tisoFacingRight.Add(Finder.GetItem(ItemNames.Soul_Refill));
 
             yield return elderbugNeutral;
             yield return gravediggerFacingLeft;
