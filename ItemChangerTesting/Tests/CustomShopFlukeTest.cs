@@ -4,8 +4,6 @@ using ItemChanger.Locations;
 using ItemChanger.Placements;
 using ItemChanger.Tags;
 using ItemChanger.UIDefs;
-using System;
-using System.Collections.Generic;
 
 namespace ItemChangerTesting.Tests
 {
@@ -46,11 +44,14 @@ namespace ItemChangerTesting.Tests
                 objectName = "Fluke Hermit",
                 fsmName = "npc_control",
                 dungDiscount = false,
-                costDisplayer = new PDIntCostDisplayer()
+                costDisplayerSelectionStrategy = new SingleCostDisplayerSelectionStrategy()
                 {
-                    Cumulative = true,
-                    FieldName = nameof(PlayerData.grubsCollected),
-                    CustomCostSprite = new ItemChangerSprite("ShopIcons.Grub")
+                    CostDisplayer = new PDIntCostDisplayer()
+                    {
+                        Cumulative = true,
+                        FieldName = nameof(PlayerData.grubsCollected),
+                        CustomCostSprite = new ItemChangerSprite("ShopIcons.Grub")
+                    }
                 },
                 requiredPlayerDataBool = nameof(PlayerData.gotCharm_11),
                 facingDirection = FacingDirection.Left,
